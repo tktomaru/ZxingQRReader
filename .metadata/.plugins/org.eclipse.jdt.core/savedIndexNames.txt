@@ -1,0 +1,5 @@
+INDEX VERSION 1.131+C:\pleiades\workspace\ZxingQRReader\.metadata\.plugins\org.eclipse.jdt.core
+1390645973.index
+1190450006.index
+2573152321.index
+1294531174.index

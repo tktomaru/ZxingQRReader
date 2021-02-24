@@ -1,0 +1,40 @@
+package com.tukutano;
+
+import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
+
+public class ZxingQRReader {
+
+  public static final void main(String[] args) {
+        String input = "qrcode.png";
+
+        try {
+            //画像データを読み込む
+            BufferedImage image = ImageIO.read(new File(input));
+            LuminanceSource source = new BufferedImageLuminanceSource(image);
+            Binarizer binarizer = new HybridBinarizer(source);
+            BinaryBitmap bitmap = new BinaryBitmap(binarizer);
+
+            QRCodeReader reader = new QRCodeReader();
+
+            //QRCodeReader#decode()には以下の情報を渡す
+            // (1)読み込んだイメージ
+            Result result = reader.decode(bitmap);
+
+            System.out.println(result.getText());
+
+        } catch (NotFoundException e) {
+            System.err.println("[" + input + "] イメージの中にバーコードが見つからないためデコードで例外が発生.");
+            e.printStackTrace();
+        } catch (ChecksumException e) {
+            System.err.println("[" + input + "] バーコードが見つかったがチェックサム検査で例外が発生.");
+            e.printStackTrace();
+        } catch (FormatException e) {
+            System.err.println("[" + input + "] は書式不正のためデコードで例外が発生.");
+            e.printStackTrace();
+        } catch (IOException e) {
+            System.err.println("[" + input + "] を読み込むときに例外が発生.");
+            e.printStackTrace();
+        }
+}
